@@ -15,6 +15,10 @@ build/
 .project
 .settings
 
+.metadata
+RemoteSystemsTempFiles
+Servers
+
 # IntelliJ IDEA Files #
 
 *.iml
