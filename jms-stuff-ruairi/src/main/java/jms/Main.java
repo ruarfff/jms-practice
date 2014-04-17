@@ -4,6 +4,7 @@ import java.util.Scanner;
 
 import jms.model.Notification;
 import jms.producer.Producer;
+import jms.receiver.NotificationRegistry;
 import jms.receiver.SyncReceiver;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,14 +16,21 @@ public class Main {
 
 	@Autowired
 	private SyncReceiver syncReceiver;
+	
+	@Autowired
+	private NotificationRegistry registry;
+
 
 	public static void main(String[] args) {
 		Main main = new Main();
         new ApplicationContextLoader().load(main, "/jms/config/app-config.xml", "/jms/config/jms-config.xml");
 	           
-		Notification notification = new Notification("1", "this is a message");
-		System.out.println("Sendign message \n" + notification.toString()); 
-		main.producer.convertAndSendMessage(notification);
+		Notification syncNotification = new Notification("1", "this is a synchronus message");
+		Notification asyncNotification = new Notification("2", "this is an asynchronus message");
+		System.out.println("Sendign sync message \n" + syncNotification.toString()); 
+		main.producer.convertAndSendMessage(syncNotification);
+		System.out.println("Sendign async message \n" + asyncNotification.toString());
+		main.producer.convertAndSendMessage("test.async.queue", asyncNotification);
 
 		try {
 			Thread.sleep(2000);
@@ -32,8 +40,11 @@ public class Main {
 		}
 
 		Notification receivedNotification = main.syncReceiver.receive();
-		System.out.println("Receiving Message\n");
+		System.out.println("Receiving Sync Message\n");
 		System.out.println(receivedNotification.toString());
+		System.out.println("\nReceiving Async Message\n");
+		System.out.println(main.registry.getReceivedNotifications().get(0).toString());
+		
 
 		String whatever;
 
