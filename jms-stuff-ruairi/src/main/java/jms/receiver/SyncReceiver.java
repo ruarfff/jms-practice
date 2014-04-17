@@ -12,6 +12,6 @@ public class SyncReceiver {
 	private JmsTemplate jmsTemplate;
 
 	public Notification receive() {
-		return (Notification) jmsTemplate.receiveAndConvert("test.sync.queue");
+		return (Notification) jmsTemplate.receiveAndConvert("FSMA");
 	}
 }
