@@ -10,4 +10,15 @@
 
 	<context:component-scan base-package="jms.producer, jms.receiver"/>
 
+	<!-- connection factory -->
+	<bean id="connectionFactory" class ="">
+		<constructor-arg value ="failover:()" />
+	</bean>
+	
+	<!-- spring jmstemplate to send messages -->
+	<bean id="jmsTemplate" class="org.springframework.jms.core.JmsTemplate">
+		<constructor-arg ref="connectionFactory"/>
+		<property name="sessionTransacted" value="false"></property>
+		<property name="receiveTimeout"value="5000"></property>
+	</bean>
 </beans>
