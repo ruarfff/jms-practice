@@ -11,6 +11,7 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.jms.core.JmsTemplate;
 import org.springframework.jms.core.MessageCreator;
 
+import jms.model.Notification;
 import jms.producer.*;
 import jms.receiver.*;
 
@@ -32,12 +33,12 @@ public class Main {
 	public static void main(String[] args) {
 		Main main = new Main();
 		
-    	main.producer.produceMessage("my test message");
+    	//main.producer.produceMessage("my test message");
+		main.producer.produceMessage(new Notification(((Double)Math.rint(30)).toString(),"my test message"));
+		main.producer.produceMessage(new Notification(((Double)Math.rint(30)).toString(),"my test message 2"));
+		
     }
     
-    private static void clearScanner(Scanner scan){
-    	while(scan.hasNext()){scan.next();}
-    }
     private static void usage(){
     	System.out.println("Enter 1 for message Sender \n Enter 2 for message receiver");
     }
@@ -45,8 +46,7 @@ public class Main {
     public Main(){
     	ApplicationContext context=new ClassPathXmlApplicationContext(XMLCONTEXT);
     	this.producer = (Producer)context.getBean("myProducer");
-    	producer.produceMessage("my test message");
-    	
+    	producer.produceMessage(new Notification(((Double)Math.rint(30)).toString(),"my test message 2"));
     	this.receiver=(AsyncReceiver)context.getBean("AsyncReceiver");
     }
 }
