@@ -9,7 +9,7 @@
 
 	<!-- Infrastructure -->
 	<bean id="connectionFactory" class="org.apache.activemq.ActiveMQConnectionFactory">
-		<property name="brokerURL" value="vm://embedded?broker.persistent=false"/>
+		<property name="brokerURL" value="tcp://10.73.66.50:61616"/>
 	</bean>
 
 	<bean id="cachingConnectionFactory" class="org.springframework.jms.connection.CachingConnectionFactory">
@@ -23,17 +23,17 @@
 
 	<!-- Destinations -->
 	<bean id="syncTestQueue" class="org.apache.activemq.command.ActiveMQQueue">
-		<constructor-arg value="test.sync.queue"/>
+		<constructor-arg value="FSMA"/>
 	</bean>
 
 	<bean id="asyncTestQueue" class="org.apache.activemq.command.ActiveMQQueue">
-		<constructor-arg value="test.async.queue"/>
+		<constructor-arg value="FSMA"/>
 	</bean>
 
 
 	<!-- Listeners -->
 	<jms:listener-container connection-factory="connectionFactory">
-		<jms:listener destination="test.async.queue" ref="asyncReceiver" method="receiveMessage"/>
+		<jms:listener destination="FSMA" ref="asyncReceiver" method="receiveMessage"/>
 	</jms:listener-container>
 
 

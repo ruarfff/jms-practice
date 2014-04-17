@@ -30,7 +30,7 @@ public class Main {
 		System.out.println("Sendign sync message \n" + syncNotification.toString()); 
 		main.producer.convertAndSendMessage(syncNotification);
 		System.out.println("Sendign async message \n" + asyncNotification.toString());
-		main.producer.convertAndSendMessage("test.async.queue", asyncNotification);
+		main.producer.convertAndSendMessage("FSMA", asyncNotification);
 
 		try {
 			Thread.sleep(2000);
