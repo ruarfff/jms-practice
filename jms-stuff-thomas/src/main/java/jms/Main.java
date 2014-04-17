@@ -36,6 +36,8 @@ public class Main {
     	//main.producer.produceMessage("my test message");
 		main.producer.produceMessage(new Notification(((Double)Math.random()).toString(),"my test message"));
 		main.producer.produceMessage(new Notification(((Double)Math.random()).toString(),"my test message 2"));
+		main.runApp();
+		System.exit(0);
 		
     }
     
@@ -48,5 +50,20 @@ public class Main {
     	this.producer = (Producer)context.getBean("myProducer");
     	producer.produceMessage(new Notification(((Double)Math.random()).toString(),"my test message 2"));
     	this.receiver=(AsyncReceiver)context.getBean("AsyncReceiver");
+    }
+    
+    public void runApp(){
+    	Scanner scan =new Scanner(System.in);
+    	String msg="";
+    	String nxt="";
+    	while(scan.hasNext()){
+    		while(!(nxt=scan.next()).equals(";")){
+    			msg+=nxt+" ";
+    		}
+    		this.producer.convertAndSendMessage(new Notification(((Double)Math.random()).toString(),msg));
+    		msg="";
+    		nxt="";
+    	}
+    	scan.close();
     }
 }
