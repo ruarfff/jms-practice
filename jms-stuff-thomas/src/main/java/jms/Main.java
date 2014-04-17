@@ -34,8 +34,8 @@ public class Main {
 		Main main = new Main();
 		
     	//main.producer.produceMessage("my test message");
-		main.producer.produceMessage(new Notification(((Double)Math.rint(30)).toString(),"my test message"));
-		main.producer.produceMessage(new Notification(((Double)Math.rint(30)).toString(),"my test message 2"));
+		main.producer.produceMessage(new Notification(((Double)Math.random()).toString(),"my test message"));
+		main.producer.produceMessage(new Notification(((Double)Math.random()).toString(),"my test message 2"));
 		
     }
     
@@ -46,7 +46,7 @@ public class Main {
     public Main(){
     	ApplicationContext context=new ClassPathXmlApplicationContext(XMLCONTEXT);
     	this.producer = (Producer)context.getBean("myProducer");
-    	producer.produceMessage(new Notification(((Double)Math.rint(30)).toString(),"my test message 2"));
+    	producer.produceMessage(new Notification(((Double)Math.random()).toString(),"my test message 2"));
     	this.receiver=(AsyncReceiver)context.getBean("AsyncReceiver");
     }
 }
